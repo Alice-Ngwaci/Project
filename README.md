@@ -6,3 +6,7 @@ A React implementation of [Davide Pacilio's](https://cruip.com/) free landing pa
 
 - Run `npm install`
 - Run `npm run dev`
+
+#Hosting
+
+- Check out my repository vite-project > README.md it has all the instructions
