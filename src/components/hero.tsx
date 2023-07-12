@@ -49,10 +49,10 @@ export function Hero({
       <div className="hero mx-auto w-full max-w-6xl px-6">
         <div className="hero-inner relative lg:flex">
           <div
-            className="hero-copy bg-white pt-10 pb-16 lg:pt-16 lg:pr-20"
-            style={{ minWidth: '600px' }}
+            className="hero-copy bg-white pt-10 pb-16 lg:pt-16 lg:pr-20 md-8"
+            
           >
-            <div className="mx-auto w-full max-w-3xl">
+            <div className="mx-auto w-full max-w-3xl mb-5">
               <h1
                 ref={(el: ScrollRevealRefElement) =>
                   scrollRevealRef.current.push(el)
@@ -76,17 +76,20 @@ export function Hero({
                 scrollRevealRef.current.push(el)
               }
             >
+              
               <NewsletterForm
-                className="m-0 mt-8 max-w-md md:flex"
+                className="m-0 mt-5 max-w-md md:flex"
                 submitText="Get early access"
                 onSubmit={onNewsletterSubmit}
+                
               />
             </div>
           </div>
 
           {!!illustration && (
-            <div className="relative -ml-6 -mr-6 py-10 lg:p-0">
+            <div className="relative -ml-8 -mr-8 py-10 lg:p-0">
               {illustration}
+              <p>Hey</p>
             </div>
           )}
         </div>
