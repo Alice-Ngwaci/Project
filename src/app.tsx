@@ -1,5 +1,4 @@
 import AccountPage from '@/routes/account'
-import HomePage from '@/routes/home'
 import DashboardPage from '@/routes/dashboard'
 import Login from '@/routes/login'
 

@@ -195,8 +195,8 @@ function Employee() {
         <tr>
             <th scope="col">UserName</th>
             <th scope="col">Email</th>
-            <th scope="col">Department</th>
-            <th scope="col">Salary</th>
+            <th scope="col">Role</th>
+           
             
         </tr>
         </MDBTableHead>
@@ -229,10 +229,6 @@ function Employee() {
 
             <td>
                 <p className="fw-normal mb-1">{task.department}</p>
-            </td>
-
-            <td>
-                <p className="fw-normal mb-1">${task.salary}</p>
             </td>
 
             </tr>
@@ -268,7 +264,7 @@ function Employee() {
                   {alert.show && <Alert {...alert} removeAlert={showAlert} />}
 
                   <MDBInput
-                    wrapperClass="mb-4 mt-4 mx-4"
+                    wrapperClass="mb-4 mt-4 "
                     label="UserName"
                     id="formControlLg"
                     type="text"
@@ -279,7 +275,7 @@ function Employee() {
                   />
 
                   <MDBInput
-                    wrapperClass="mb-4 mx-4"
+                    wrapperClass="mb-4 "
                     label="Email"
                     id="formControlLg"
                     type="email"
@@ -289,7 +285,7 @@ function Employee() {
                     required
                   />
                   <MDBInput
-                    wrapperClass="mb-4 mx-4"
+                    wrapperClass="mb-4 "
                     label="Department"
                     id="formControlLg"
                     type="text"
@@ -299,7 +295,7 @@ function Employee() {
                     required
                   />
                   <MDBInput
-                    wrapperClass="mb-4 mx-4"
+                    wrapperClass="mb-4"
                     label="Salary"
                     id="formControlLg"
                     type="text"
@@ -309,7 +305,7 @@ function Employee() {
                     required
                   />
                   <MDBInput
-                    wrapperClass="mb-4 mx-4"
+                    wrapperClass="mb-4 "
                     label="Paste Profile URL"
                     id="formControlLg"
                     type="text"

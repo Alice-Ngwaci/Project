@@ -53,7 +53,7 @@ export default function Account() {
                   onClick={() => handleIconsClick('tab1')}
                   active={iconsActive === 'tab1'}
                 >
-                  <MDBIcon fas icon="folder" className="me-2" /> Tasks
+                <MDBIcon fas icon="folder" className="me-2" /> Tasks
                 </MDBTabsLink>
               </MDBTabsItem>
               

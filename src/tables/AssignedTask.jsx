@@ -162,6 +162,9 @@ export default function AssignedTask({assignedTask}) {
         {task.map((tasks) => (<>
   
             <tr key={tasks.key}>
+
+            {(tasks.email === auth.currentUser.email || tasks.email === "admin@gmail.com")  ? (
+            <>
             <td>
                 <div className="d-flex align-items-center">
                
@@ -231,7 +234,13 @@ export default function AssignedTask({assignedTask}) {
                   Task
                 </MDBBtn>
             </td>
-
+            </>
+            ):(
+            <>
+            <div><img src={empty} style={{marginLeft: '20%'}} width="500px"/> No Tasks Assigned to you yet</div>
+            </>
+            )}
+            
             </tr>
 
            </> 

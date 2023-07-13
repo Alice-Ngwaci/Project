@@ -3,6 +3,14 @@ const reducer = (state, action) => {
   return{...state, employees: [action.payload,...state.employees]
   }
   }
+  if(action.type === 'ADD_FOLDER'){
+    return{...state, folders: [action.payload,...state.folders]
+    }
+    }
+  if(action.type === 'SETUP_MEETING'){
+    return{...state, meetings: [action.payload,...state.meetings]
+    }
+    }
   if(action.type === 'ASSIGN_TASK'){
     return{...state, task: [action.payload,...state.task]
     }

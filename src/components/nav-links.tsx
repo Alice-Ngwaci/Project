@@ -84,8 +84,8 @@ export function NavLinks({ className }: { className?: string }) {
         
       ))}
       </>):null}
-      &nbsp;
-      <MDBBtn className="" color='dark' size='sm' style={{fontWeight: "bold", borderRadius: 4, fontSize: 10, marginTop: '30px', position: 'absolute', marginLeft: '40%'}} onClick={logout}>
+     
+      <MDBBtn className="" color='dark' size='sm' style={{fontWeight: "bold", borderRadius: 4, fontSize: 10, marginTop: '-1px', position: 'absolute', marginLeft: '40%'}} onClick={logout}>
         <MDBIcon fas icon='sign-out-alt'  /> 
           LogOut
       </MDBBtn>

@@ -87,13 +87,13 @@ export default function Account() {
           
             <MDBTabsItem>
            
-              <MDBTabsLink onClick={() => handleVerticalClick('tab2')} active={verticalActive === 'tab1'}>
-              <MDBIcon fas icon="folder" className="me-3" /> Setup Meeting
+              <MDBTabsLink onClick={() => handleVerticalClick('tab2')} active={verticalActive === 'tab2'}>
+              <MDBIcon fas icon="handshake" className="me-3" /> Setup For Meeting
               </MDBTabsLink>
             </MDBTabsItem>
             <MDBTabsItem>
-              <MDBTabsLink onClick={() => handleVerticalClick('tab1')} active={verticalActive === 'tab2'}>
-              <MDBIcon fas icon="handshake" className="me-3" />  Documents
+              <MDBTabsLink onClick={() => handleVerticalClick('tab1')} active={verticalActive === 'tab1'}>
+              <MDBIcon fas icon="folder" className="me-3" />  File Arrangement
               </MDBTabsLink>
             </MDBTabsItem>
             <MDBTabsItem>

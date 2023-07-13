@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react'
-import { people } from '../data/Data';
-import Select from 'react-select';
+
+import Data from '../data/Data';
 
 import {
 
@@ -19,15 +19,10 @@ import {
   MDBModalTitle,
   MDBModalBody,
   MDBBtn,
-  MDBInput
+  MDBInput,
+  MDBModalFooter,
    
-  } from 'mdb-react-ui-kit';
-
-  const options = [
-    { value: 'Information Technology', label: 'Information Technology' },
-    { value: 'Finance', label: 'Finance' },
-    { value: 'Human Resource', label: 'Human Resource' },
-  ];
+} from 'mdb-react-ui-kit';
 
 //Global Data
 
@@ -40,7 +35,14 @@ import Alert from '../components/alert';
 
 export default function Tasks() {
 
-  const [date, setDate] = useState('');
+  //create folder
+
+  const [filename, setFileName] = useState('');
+  const [description, setDescrition] = useState('');
+  const [url, setURL] = useState('');
+
+  //Assign task
+
   const [email, setEmail] = useState('');
 
   //alerts
@@ -58,7 +60,7 @@ export default function Tasks() {
      
     //Global Context
 
-    const { assignTask, remove } = useGlobalContext()
+    const { assignTask, remove, addFolder, folders } = useGlobalContext()
 
     //Modal
     
@@ -80,18 +82,21 @@ export default function Tasks() {
     console.log(selectedUserId);
   
 
-    const handleRowClick = (people) => {
+    const handleRowClick = (person) => {
 
-      setSelectedItem(people)
-      setSelectedUserId(people.id)
-      setSelectedName(people.name)
-      setSelectedTitle(people.title)
-      setSelectedDetails(people.details)
-      setSelectedEmail(people.email)
- 
+      setSelectedItem(person)
+      setSelectedUserId(folders.id)
+      setSelectedName(folders.filename)
+      setSelectedTitle(folders.description)
+     
 
       toggleShow3()
     }
+
+    //create folder modal
+
+      const [centredModal, setCentredModal] = useState(false)
+      const toggleShow = () => setCentredModal(!centredModal)
 
 
     //Assign Task
@@ -100,8 +105,8 @@ export default function Tasks() {
 
     const Start = () =>{
 
-      if ( !selectedOption ) {
-        showAlert(true, 'danger', 'info-circle', 'Select Department')
+      if ( !email ) {
+        showAlert(true, 'danger', 'info-circle', 'Select Email')
       }else {
 
         const Item = {
@@ -123,6 +128,19 @@ export default function Tasks() {
       }
 
     }
+
+    //reset modal
+
+  useEffect(() => {
+
+    if(!centredModal){
+      null
+    }else{
+     
+      setEmail("")
+    
+    }
+  })
     
   return (
     <div>
@@ -139,7 +157,20 @@ export default function Tasks() {
                
             </div>
 
-            {!people.length > 0 ? (
+          <MDBBtn
+            style={{
+            backgroundColor: 'InfoBackground',
+            float: 'right',
+            marginTop: '-50px'
+            }}
+            rounded
+            size="sm"
+            onClick={toggleShow}
+          >
+            Create Folder
+          </MDBBtn>
+
+            {!addFolder.length > 0 ? (
               <>
               
               <div><img src={empty} style={{marginLeft: '20%'}} width="500px"/> No Tasks</div>
@@ -151,13 +182,13 @@ export default function Tasks() {
               
               <div style={{display: 'flex', flexDirection: 'row', flexWrap: 'wrap', alignItems: "space-around", marginLeft: '20px'}}>
               
-             {people.map((person) => (
+             {folders.map((person) => (
               <>
               
                 <MDBCard className='ml-5 mr-5 mt-3'  style={{width: '120px', height: '120px', cursor: 'pointer'}}  key = {person.id} onClick={() => handleRowClick(person)}>
                 <MDBCardBody>
                 <MDBIcon  fas icon="folder" className="text-center text-success" key = {person.id} size="2x" >
-                <p>{person.id}</p>
+                <p style={{fontSize: '15px'}}>{person.filename}</p>
                 </MDBIcon>
                 </MDBCardBody>
                 </MDBCard>
@@ -214,31 +245,21 @@ export default function Tasks() {
           {alert.show && <Alert {...alert} removeAlert={showAlert} />}
 
           <MDBModalBody>
-          <MDBInput wrapperClass='mb-4'  id='formControlLg' label='Participant Email' type='email' size="lg"
-                style={{height: 50}}
-                value={email} 
-                onChange={(e) => setEmail(e.target.value)}
-                />
-
-              <MDBInput wrapperClass='mb-4'  id='formControlLg'  type='file' size="lg"
-                style={{height: 50}}
-                value={email} 
-                onChange={(e) => setEmail(e.target.value)}
-                />
+          
             <div>
           
               <h5
                 className="fw-normal  mb-4"
                 style={{ letterSpacing: '1px' }}
               >
-                Client_Name: {selectedItem.name}
+                File_Name: {selectedItem.name}
               </h5>
 
               <h5
                 className="fw-normal  mb-4"
                 style={{ letterSpacing: '1px' }}
               >
-                Title: {selectedItem.title}
+                Title: Task Assigning
               </h5>
 
               <h5
@@ -248,10 +269,24 @@ export default function Tasks() {
                 Details: {selectedItem.details}
               </h5>
 
-              <Select
-              defaultValue={selectedOption}
-              onChange={setSelectedOption}
-              options={options}
+              <h5
+                className="fw-normal  mb-4"
+                style={{ letterSpacing: '1px' }}
+              >
+                Folder_ID: 1
+              </h5>
+
+              <h5
+                className="fw-normal  mb-4"
+                style={{ letterSpacing: '1px' }}
+              >
+                Assign Work To Email
+              </h5>
+
+              <MDBInput wrapperClass=''  id='formControlLg' label='Email' type='email' size="lg"
+                style={{height: 50}}
+                value={email} 
+                onChange={(e) => setEmail(e.target.value)}
               />
 
               <MDBBtn
@@ -272,6 +307,108 @@ export default function Tasks() {
     </MDBModal>
     )}
     </>
+
+    {/* create folder modal */}
+    <>
+          <MDBModal tabIndex="-1" show={centredModal} setShow={setCentredModal}>
+            <MDBModalDialog xl scrollable centered>
+              <MDBModalContent>
+                <MDBModalHeader>
+                  <MDBModalTitle>
+                    <MDBIcon fas icon="folder text-success" className="me-3" />
+                    Create Folder
+                  </MDBModalTitle>
+                 
+                  <MDBBtn
+                    className="btn-close"
+                    color="none"
+                    onClick={toggleShow}
+                    style={{ fontSize: 10, fontWeight: 'bold' }}
+                  ></MDBBtn>
+                </MDBModalHeader>
+
+                <MDBModalBody style={{padding: '25px'}}>
+
+                  {alert.show && <Alert {...alert} removeAlert={showAlert} />}
+
+                  <MDBInput
+                    wrapperClass="mb-4 mt-4 "
+                    label="FileName"
+                    id="formControlLg"
+                    type="text"
+                    size="lg"
+                    value={filename}
+                    onChange={(e) => setFileName(e.target.value)}
+                    required
+                  />
+
+                  <MDBInput
+                    wrapperClass="mb-4 "
+                    label="Description"
+                    id="formControlLg"
+                    type="text"
+                    size="lg"
+                    value={description}
+                    onChange={(e) => setDescrition(e.target.value)}
+                    required
+                  />
+                  <MDBInput
+                    wrapperClass="mb-4 "
+                    id="formControlLg"
+                    type="file"
+                    size="lg"
+                    value={url}
+                    onChange={(e) => setURL(e.target.value)}
+                    required
+                  />
+                
+                </MDBModalBody>
+
+                <MDBModalFooter className="modal-footer">
+                <MDBBtn
+                    // className="mb-4 px-5"
+                    color="warning"
+                    size="lg"
+                    style={{
+                      fontWeight: 'bold',
+                      marginLeft: -2,
+                      borderRadius: 4,
+                      fontSize: 10
+                    }}
+                    onClick={() => {
+                      
+                      !toggleShow()
+
+                    }}
+                  >
+                    
+                    Close
+
+                </MDBBtn>
+                &nbsp;&nbsp;
+                <MDBBtn
+                    // className="mb-4 px-5"
+                    color="info"
+                    size="lg"
+                    style={{
+                      fontWeight: 'bold',
+                      marginLeft: -2,
+                      borderRadius: 4,
+                      fontSize: 10
+                    }}
+                    onClick={() => {
+                      register()
+                    }}
+                  >
+                    
+                    Create Folder
+
+                  </MDBBtn>
+                </MDBModalFooter>
+              </MDBModalContent>
+            </MDBModalDialog>
+          </MDBModal>
+        </>
         
     </div>
     

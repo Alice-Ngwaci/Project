@@ -8,7 +8,7 @@ import {
 
 export function Header({ title }: { title?: string }) {
   return (
-    <header className="relative">
+    <header className="fixed bg-light shadow-2xl" style={{padding: '20px'}}>
       <div className="mx-auto w-full max-w-6xl ">
         <div className="relative flex items-center justify-between">
          <h3 className=" mt-5 m-0 text-xl font-bold uppercase leading-none" >
