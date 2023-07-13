@@ -153,7 +153,6 @@ export default function AssignedTask({assignedTask}) {
             <th scope="col">ClientEmail</th>
             <th scope="col">Title</th>
             <th scope="col">Details</th>
-            <th scope="col">Department</th>
             <th scope="col">Review</th>
         </tr>
         </MDBTableHead>
@@ -191,33 +190,6 @@ export default function AssignedTask({assignedTask}) {
 
             <td>
                 <p className="fw-normal mb-1">{tasks.details}</p>
-            </td>
-
-            <td>
-            {tasks.department === "Information Technology" ? (
-            <>
-             <MDBBadge color="success" pill>
-                {tasks.department}
-             </MDBBadge>
-            </>
-            ):(
-            <>
-
-            {tasks.department === "Human Resource" ? (
-            <>
-             <MDBBadge color="info" pill>
-                {tasks.department}
-             </MDBBadge>
-            </>
-            ):(
-            <MDBBadge color="warning" pill>
-                {tasks.department}
-             </MDBBadge>
-            )}
-
-
-            </>)}
-           
             </td>
 
             <td>

@@ -1,7 +1,5 @@
 import React, {useEffect, useState} from 'react'
 
-import Data from '../data/Data';
-
 import {
 
   MDBIcon,
@@ -28,6 +26,12 @@ import {
 
 import { useGlobalContext } from '../context/context'
 
+//firebase
+
+import { auth, db, storage } from '../firebase/firebaseConfig';
+import {collection, addDoc, Timestamp,  query, where, onSnapshot, } from 'firebase/firestore';
+import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
+
 //Components
 
 import Alert from '../components/alert';
@@ -39,7 +43,7 @@ export default function Tasks() {
 
   const [filename, setFileName] = useState('');
   const [description, setDescrition] = useState('');
-  const [url, setURL] = useState('');
+
 
   //Assign task
 
@@ -68,7 +72,7 @@ export default function Tasks() {
     const toggleShow3 = () => setCentredModal3(!centredModal3)
 
     //Input
-    const [selectedOption, setSelectedOption] = useState(null);
+   
 
     //Folder click
 
@@ -78,20 +82,20 @@ export default function Tasks() {
     const [selectedTitle, setSelectedTitle] = useState(null)
     const [selectedDetails, setSelectedDetails] = useState(null)
     const [selectedUserId, setSelectedUserId] = useState(null)
-
-    console.log(selectedUserId);
   
 
     const handleRowClick = (person) => {
 
       setSelectedItem(person)
-      setSelectedUserId(folders.id)
-      setSelectedName(folders.filename)
-      setSelectedTitle(folders.description)
+      setSelectedUserId(person.id)
+      setSelectedName(person.filename)
+      setSelectedTitle(person.description)
      
 
       toggleShow3()
     }
+
+    console.log(selectedUserId)
 
     //create folder modal
 
@@ -113,10 +117,9 @@ export default function Tasks() {
 
           id: number,
           name: selectedName,
-          title: selectedTitle,
-          details: selectedDetails,
-          department: selectedOption.value,
-          email: selectedEmail,
+          title: "Assigned Task",
+          details: description,
+          email: email,
    
         }
         assignTask(Item);
@@ -141,6 +144,72 @@ export default function Tasks() {
     
     }
   })
+
+  //create function
+  const numbers = Math.floor(Math.random() * 100);
+
+  const create = () => {
+
+    if (!filename || !description) {
+      showAlert(true, 'danger', 'info-circle', 'All input field are required')
+    } else {
+
+    }
+  
+    const Item = {
+
+      id: numbers,
+      filename: filename,
+      description: description,
+
+    }
+    addFolder(Item);
+   
+    !toggleShow();
+    
+ }
+
+  //upload file
+
+  const uploadFile = (e) => {
+    
+    const q2 = query(collection(db, "file_data"),where("email", "==", `${auth.currentUser.email}`));
+
+
+    onSnapshot(q2, (querySnapshot) => {
+
+      if (querySnapshot.size === 0) {
+
+      e.preventDefault()
+
+      const file = e.target.files[0];
+ 
+      const storageRef = ref(storage, `files/${file.name}`);
+      const uploadTask = uploadBytesResumable(storageRef, file);
+    
+      uploadTask.on("state_changed", (snapshot) => {
+        const prog = Math.round((snapshot.bytesTransferred / snapshot.totalBytes)*100);
+        console.log(prog);
+      
+      },
+      (err) => console.log(err),
+      () => {
+        const createdAt = Timestamp.now()
+        getDownloadURL(uploadTask.snapshot.ref)
+      
+        .then(url =>  addDoc(collection(db, 'file_data'), { 
+          user_id: auth.currentUser.uid,
+          email: auth.currentUser.email,
+          image_url: url, 
+          created: createdAt}));
+        
+      })
+
+    }
+
+  })
+
+  }
     
   return (
     <div>
@@ -185,7 +254,7 @@ export default function Tasks() {
              {folders.map((person) => (
               <>
               
-                <MDBCard className='ml-5 mr-5 mt-3'  style={{width: '120px', height: '120px', cursor: 'pointer'}}  key = {person.id} onClick={() => handleRowClick(person)}>
+                <MDBCard className='ml-5 mr-5 mt-3'  style={{width: '120px', height: '120px', marginLeft: '20px', cursor: 'pointer'}}  key = {person.id} onClick={() => handleRowClick(person)}>
                 <MDBCardBody>
                 <MDBIcon  fas icon="folder" className="text-center text-success" key = {person.id} size="2x" >
                 <p style={{fontSize: '15px'}}>{person.filename}</p>
@@ -252,7 +321,7 @@ export default function Tasks() {
                 className="fw-normal  mb-4"
                 style={{ letterSpacing: '1px' }}
               >
-                File_Name: {selectedItem.name}
+                File_Name: {selectedItem.filename}
               </h5>
 
               <h5
@@ -266,14 +335,14 @@ export default function Tasks() {
                 className="fw-normal  mb-4"
                 style={{ letterSpacing: '1px' }}
               >
-                Details: {selectedItem.details}
+                Details: {selectedItem.description}
               </h5>
 
               <h5
                 className="fw-normal  mb-4"
                 style={{ letterSpacing: '1px' }}
               >
-                Folder_ID: 1
+                Folder_ID: {selectedItem.id}
               </h5>
 
               <h5
@@ -357,8 +426,7 @@ export default function Tasks() {
                     id="formControlLg"
                     type="file"
                     size="lg"
-                    value={url}
-                    onChange={(e) => setURL(e.target.value)}
+                    onChange={uploadFile}
                     required
                   />
                 
@@ -397,11 +465,11 @@ export default function Tasks() {
                       fontSize: 10
                     }}
                     onClick={() => {
-                      register()
+                      create()
                     }}
                   >
-                    
-                    Create Folder
+              
+                  Create Folder
 
                   </MDBBtn>
                 </MDBModalFooter>
