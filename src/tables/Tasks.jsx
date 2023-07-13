@@ -37,6 +37,7 @@ import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
 import Alert from '../components/alert';
 
 
+
 export default function Tasks() {
 
   //create folder
@@ -78,9 +79,7 @@ export default function Tasks() {
 
     const [selectedItem, setSelectedItem] = useState(null)
     const [selectedName, setSelectedName] = useState(null)
-    const [selectedEmail, setSelectedEmail] = useState(null)
     const [selectedTitle, setSelectedTitle] = useState(null)
-    const [selectedDetails, setSelectedDetails] = useState(null)
     const [selectedUserId, setSelectedUserId] = useState(null)
   
 
@@ -368,7 +367,24 @@ export default function Tasks() {
                 }}
               >
                 Assign Task
-              </MDBBtn>
+            </MDBBtn>
+
+            <MDBBtn
+                className="mt-2 px-10"
+                color="info"
+                size="lg"
+                style={{ fontWeight: 'bold', width: '60%' }}
+               
+            >
+            <a href= {"https://firebasestorage.googleapis.com/v0/b/mhasibusacco-2bf05.appspot.com/o/files%2FBralison%20Profile_230501_194246.pdf?alt=media&token=9d0a0af7-36bd-40d8-a078-2b5bb0bc2fdc"} download className="bg-info text-white font-bold mt-4 mb-0 bg-info sm"
+             style={{
+              height: '50px',
+              width: '200px',
+              borderRadius: '4px',
+              color: 'black'
+             }}>
+              Download Document</a>
+            </MDBBtn>
             </div>
           </MDBModalBody>
         </MDBModalContent>
