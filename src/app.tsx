@@ -52,7 +52,7 @@ export default function App() {
 
         <>
         
-        <Route path="/" element={<HomePage />} />
+        <Route path="/" element={<Login />} />
         <Route path="/login" element={<Login />} />
          
         </>
@@ -68,6 +68,7 @@ export default function App() {
         )}
 
         <Route path="*" element={<Login />} />
+        <Route path="/" element={<Login />} />
           
       </Routes>
       </ScrollToTop>
