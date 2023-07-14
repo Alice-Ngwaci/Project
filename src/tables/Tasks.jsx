@@ -116,8 +116,8 @@ export default function Tasks() {
 
           id: number,
           name: selectedName,
-          title: "Assigned Task",
-          details: description,
+          title: selectedName,
+          details: selectedTitle,
           email: email,
    
         }
@@ -144,6 +144,20 @@ export default function Tasks() {
     }
   })
 
+  //reset modal
+
+  useEffect(() => {
+
+    if(!centredModal3){
+      null
+    }else{
+     
+      setFileName("")
+      setDescrition("")
+    
+    }
+  })
+
   //create function
   const numbers = Math.floor(Math.random() * 100);
 
@@ -153,18 +167,18 @@ export default function Tasks() {
       showAlert(true, 'danger', 'info-circle', 'All input field are required')
     } else {
 
-    }
+      const Item = {
+
+        id: numbers,
+        filename: filename,
+        description: description,
   
-    const Item = {
-
-      id: numbers,
-      filename: filename,
-      description: description,
+      }
+      addFolder(Item);
+     
+      !toggleShow();
 
     }
-    addFolder(Item);
-   
-    !toggleShow();
     
  }
 
@@ -323,26 +337,20 @@ export default function Tasks() {
                 File_Name: {selectedItem.filename}
               </h5>
 
-              <h5
-                className="fw-normal  mb-4"
-                style={{ letterSpacing: '1px' }}
-              >
-                Title: Task Assigning
-              </h5>
-
-              <h5
-                className="fw-normal  mb-4"
-                style={{ letterSpacing: '1px' }}
-              >
-                Details: {selectedItem.description}
-              </h5>
-
-              <h5
-                className="fw-normal  mb-4"
-                style={{ letterSpacing: '1px' }}
-              >
-                Folder_ID: {selectedItem.id}
-              </h5>
+            <>
+            <a 
+            href= {"https://kevin-chela.github.io/portfolio-react-main/"} download className="bg-info text-white font-bold mt-4 mb-0 bg-info sm"
+            >
+              <MDBCard className='ml-5 mr-5 mb-3'  style={{width: '100px', height: '100px', marginLeft: '35%', cursor: 'pointer'}}>
+              <MDBCardBody>
+              <MDBIcon  fas icon="folder" className="text-center text-success" size="2x" >
+              <p style={{fontSize: '15px'}} className="text-center">{selectedItem.description}</p>
+              </MDBIcon>
+              </MDBCardBody>
+              </MDBCard>
+            </a>
+              
+            </>
 
               <h5
                 className="fw-normal  mb-4"
@@ -369,22 +377,6 @@ export default function Tasks() {
                 Assign Task
             </MDBBtn>
 
-            <MDBBtn
-                className="mt-2 px-10"
-                color="info"
-                size="lg"
-                style={{ fontWeight: 'bold', width: '60%' }}
-               
-            >
-            <a href= {"https://firebasestorage.googleapis.com/v0/b/mhasibusacco-2bf05.appspot.com/o/files%2FBralison%20Profile_230501_194246.pdf?alt=media&token=9d0a0af7-36bd-40d8-a078-2b5bb0bc2fdc"} download className="bg-info text-white font-bold mt-4 mb-0 bg-info sm"
-             style={{
-              height: '50px',
-              width: '200px',
-              borderRadius: '4px',
-              color: 'black'
-             }}>
-              Download Document</a>
-            </MDBBtn>
             </div>
           </MDBModalBody>
         </MDBModalContent>
@@ -418,7 +410,7 @@ export default function Tasks() {
 
                   <MDBInput
                     wrapperClass="mb-4 mt-4 "
-                    label="FileName"
+                    label="FolderName"
                     id="formControlLg"
                     type="text"
                     size="lg"
@@ -429,7 +421,7 @@ export default function Tasks() {
 
                   <MDBInput
                     wrapperClass="mb-4 "
-                    label="Description"
+                    label="FileName"
                     id="formControlLg"
                     type="text"
                     size="lg"
@@ -481,8 +473,9 @@ export default function Tasks() {
                       fontSize: 10
                     }}
                     onClick={() => {
-                      create()
+                      { create()}
                     }}
+                   
                   >
               
                   Create Folder

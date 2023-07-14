@@ -73,7 +73,7 @@ function Employee() {
     const [username, setUserName] = useState('')
     const [email, setEmail] = useState('')
     const [department, setDepartment] = useState('')
-    const [salary, setSalary] = useState('')
+    const [salary, setSalary] = useState(0)
     const [url, setURL] = useState('')
     const [password, setPassword] = useState('123456')
 
@@ -286,7 +286,7 @@ function Employee() {
                   />
                   <MDBInput
                     wrapperClass="mb-4 "
-                    label="Department"
+                    label="Role"
                     id="formControlLg"
                     type="text"
                     size="lg"
@@ -294,16 +294,7 @@ function Employee() {
                     onChange={(e) => setDepartment(e.target.value)}
                     required
                   />
-                  <MDBInput
-                    wrapperClass="mb-4"
-                    label="Salary"
-                    id="formControlLg"
-                    type="text"
-                    size="lg"
-                    value={salary}
-                    onChange={(e) => setSalary(e.target.value)}
-                    required
-                  />
+              
                   <MDBInput
                     wrapperClass="mb-4 "
                     label="Paste Profile URL"
