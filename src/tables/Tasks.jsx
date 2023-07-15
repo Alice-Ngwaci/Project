@@ -223,7 +223,30 @@ export default function Tasks() {
   })
 
   }
-    
+
+  //fetch files
+
+  const [fileData, setFileData] = useState([])
+
+  useEffect(() => {
+      
+    const q = query(collection(db, 'file_data'))
+
+    onSnapshot(q, (querySnapshot) => {
+      const list = []
+      setFileData([])
+
+      querySnapshot.forEach((doc) => {
+        list.push(doc.data())
+        setFileData((prevState) => [
+          ...prevState,
+          { ...doc.data(), key: doc.id },
+        ])
+      })
+    })
+
+  })
+ 
   return (
     <div>
 
@@ -336,10 +359,13 @@ export default function Tasks() {
               >
                 File_Name: {selectedItem.filename}
               </h5>
-
+            
             <>
+            {fileData.map((task) => (
+              <div key={task.key}>
+
             <a 
-            href= {"https://kevin-chela.github.io/portfolio-react-main/"} download className="bg-info text-white font-bold mt-4 mb-0 bg-info sm"
+            href= {task.image_url} download className="bg-info text-white font-bold mt-4 mb-0 bg-info sm"
             >
               <MDBCard className='ml-5 mr-5 mb-3'  style={{width: '100px', height: '100px', marginLeft: '35%', cursor: 'pointer'}}>
               <MDBCardBody>
@@ -349,6 +375,10 @@ export default function Tasks() {
               </MDBCardBody>
               </MDBCard>
             </a>
+
+              </div>
+            ))}
+           
               
             </>
 
