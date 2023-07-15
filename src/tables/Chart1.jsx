@@ -255,10 +255,25 @@ class App extends Component {
    
     <MDBCardBody>
 
-    <div className='d-flex flex-row mt-1 mb-3' style={{fontSize: 10}}>
+    <div className='d-flex flex-row mt-1 mb-3' style={{fontSize: 10, justifyContent: 'space-between'}}>
                 <MDBIcon fas icon="cubes fa-3x me-3" style={{ color: '#ff6219' }}/>
                 <span className="p fw-bold mt-2">MHASIBU SACCO</span>
+
+              <a href="https://centrinoprojects.sharepoint.com/sites/EBOARD/Board%20Documents/">
+              <MDBBtn
+                style={{
+                backgroundColor: 'Info',
+                float: 'right',
+                marginTop: '-5px'
+                }}
+                rounded
+                size="sm"
+              >
+                Share Files
+              </MDBBtn>
+              </a>
               </div>
+          
 
     <div className="app">
         <div className="row">
@@ -275,7 +290,7 @@ class App extends Component {
 
         <div className="row">
           <p className="col" style={{marginLeft: '70%'}}>
-            <MDBBtn onClick={this.updateCharts}>Update</MDBBtn>
+            <MDBBtn onClick={this.updateCharts}>Next</MDBBtn>
           </p>
         </div>
       </div>

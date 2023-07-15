@@ -259,6 +259,8 @@ class App extends Component {
                 <MDBIcon fas icon="cubes fa-3x me-3" style={{ color: '#ff6219' }}/>
                 <span className="p fw-bold mt-2">MHASIBU SACCO</span>
               </div>
+    
+        
 
     <div className="app">
         <div className="row">
@@ -275,7 +277,7 @@ class App extends Component {
 
         <div className="row">
           <p className="col" style={{marginLeft: '80%'}}>
-            <MDBBtn onClick={this.updateCharts}>Update</MDBBtn>
+            <MDBBtn onClick={this.updateCharts}>Next</MDBBtn>
           </p>
         </div>
       </div>

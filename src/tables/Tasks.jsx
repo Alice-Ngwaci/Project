@@ -237,7 +237,7 @@ export default function Tasks() {
                 <MDBIcon fas icon="cubes fa-3x me-3" style={{ color: '#ff6219' }}/>
                 <span className="p fw-bold mt-2">MHASIBU SACCO FILES</span>
                
-            </div>
+          </div>
 
           <MDBBtn
             style={{
