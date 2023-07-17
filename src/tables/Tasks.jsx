@@ -29,7 +29,7 @@ import { useGlobalContext } from '../context/context'
 //firebase
 
 import { auth, db, storage } from '../firebase/firebaseConfig';
-import {collection, addDoc, Timestamp,  query, where, onSnapshot, } from 'firebase/firestore';
+import {collection, Timestamp,  query, where, onSnapshot,updateDoc, doc, getDocs } from 'firebase/firestore';
 import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
 
 //Components
@@ -93,8 +93,6 @@ export default function Tasks() {
 
       toggleShow3()
     }
-
-    console.log(selectedUserId)
 
     //create folder modal
 
@@ -184,15 +182,28 @@ export default function Tasks() {
 
   //upload file
 
+  const [currentid, setCurrentID] = useState([])
+
+   useEffect(() => {
+      
+    const q = query(collection(db, 'file_data'))
+
+    getDocs(q)
+     .then((snapshot) =>{
+       var id;
+     
+     snapshot.docs.forEach((doc) =>{
+
+       id = doc.id;
+       setCurrentID(id)
+       
+       })
+   }) 
+
+  })
+
   const uploadFile = (e) => {
     
-    const q2 = query(collection(db, "file_data"),where("email", "==", `${auth.currentUser.email}`));
-
-
-    onSnapshot(q2, (querySnapshot) => {
-
-      if (querySnapshot.size === 0) {
-
       e.preventDefault()
 
       const file = e.target.files[0];
@@ -210,17 +221,14 @@ export default function Tasks() {
         const createdAt = Timestamp.now()
         getDownloadURL(uploadTask.snapshot.ref)
       
-        .then(url =>  addDoc(collection(db, 'file_data'), { 
-          user_id: auth.currentUser.uid,
-          email: auth.currentUser.email,
+        .then(url =>  updateDoc(doc(db, 'file_data', currentid), { 
+       
           image_url: url, 
-          created: createdAt}));
+          created: createdAt,
+         
+        }));
         
       })
-
-    }
-
-  })
 
   }
 

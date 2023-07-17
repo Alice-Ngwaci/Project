@@ -1,3 +1,4 @@
+
 import {
   MDBBtn,
   MDBIcon,
@@ -39,7 +40,7 @@ import { useGlobalContext } from '../context/context'
 //firebase
 
 import { auth, db, storage } from '../firebase/firebaseConfig';
-import {collection, addDoc, Timestamp,  query, where, onSnapshot, } from 'firebase/firestore';
+import {collection, addDoc, Timestamp,  query, where, onSnapshot, updateDoc, doc, getDocs } from 'firebase/firestore';
 import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
 
 //Profile 
@@ -119,21 +120,39 @@ function Meet() {
         details: `Meeting ${title} set for ${date} at ${time} to join. Location: ${location} .`,
         
     })
+
+    sendEmail()
     
-     !toggleShow()
+    !toggleShow()
      
   }
 
    //upload file
 
+   const [currentid, setCurrentID] = useState([])
+
+   useEffect(() => {
+      
+    const q = query(collection(db, 'file_data'))
+
+    getDocs(q)
+     .then((snapshot) =>{
+       var id;
+     
+     snapshot.docs.forEach((doc) =>{
+
+       id = doc.id;
+       setCurrentID(id)
+       
+       })
+   }) 
+
+  })
+
+  console.log(currentid)
+
+
    const uploadFile = (e) => {
-    
-    const q2 = query(collection(db, "file_data"),where("email", "==", `${auth.currentUser.email}`));
-
-
-    onSnapshot(q2, (querySnapshot) => {
-
-      if (querySnapshot.size === 0) {
 
       e.preventDefault()
 
@@ -151,18 +170,21 @@ function Meet() {
       () => {
         const createdAt = Timestamp.now()
         getDownloadURL(uploadTask.snapshot.ref)
-      
-        .then(url =>  addDoc(collection(db, 'file_data'), { 
-          user_id: auth.currentUser.uid,
-          email: auth.currentUser.email,
+
+        .then(url =>   updateDoc(doc(db, 'file_data', currentid),{
+    
           image_url: url, 
-          created: createdAt}));
+          created: createdAt
+      
+        }));
+      
+        // .then(url =>  addDoc(collection(db, 'file_data'), { 
+        //   user_id: auth.currentUser.uid,
+        //   email: auth.currentUser.email,
+        //   image_url: url, 
+        //   created: createdAt}));
         
       })
-
-    }
-
-  })
 
   }
 
@@ -180,6 +202,45 @@ function Meet() {
       setTime("")
     }
   })
+
+  //send email
+
+  // const sendEmail = () => {
+
+  //   // const client = new SMTPClient({
+  //   //   user: 'user',
+  //   //   password: 'password',
+  //   //   host: 'smtp.your-email.com',
+  //   //   ssl: true,
+  //   // });
+
+  //   // const message = new Message({
+  //   //   text: 'i hope this works',
+  //   //   from: 'you <username@outlook.com>',
+  //   //   to: 'someone <someone@your-email.com>, another <another@your-email.com>',
+  //   //   cc: 'else <else@your-email.com>',
+  //   //   subject: 'testing emailjs',
+  //   //   attachment: [
+  //   //     {
+  //   //       data:
+  //   //         '<html>i <i>hope</i> this works! here is an image: <img src="cid:my-image" width="100" height ="50"> </html>',
+  //   //     },
+  //   //     { path: 'path/to/file.zip', type: 'application/zip', name: 'renamed.zip' },
+  //   //     {
+  //   //       path: 'path/to/image.jpg',
+  //   //       type: 'image/jpg',
+  //   //       headers: { 'Content-ID': '<my-image>' },
+  //   //     },
+  //   //   ],
+  //   // });
+    
+  //   // // send the message and get a callback with an error or details of the message that was sent
+
+  //   // client.send(message, (err, message) => {
+  //   //   console.log(err || message);
+  //   // });
+  
+  // }
 
   return (
     <div style={{padding: '150'}}>

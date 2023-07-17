@@ -41,6 +41,7 @@
     "apexcharts": "^3.41.0",
     "clsx": "^1.2.1",
     "dayjs": "^1.11.9",
+    "emailjs": "^4.0.2",
     "firebase": "^10.0.0",
     "gh-pages": "^5.0.0",
     "mdb-react-ui-kit": "^6.1.0",
