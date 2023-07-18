@@ -1,7 +1,7 @@
 import { Article} from '@/components/article'
 import { Layout } from '@/components/layout'
 import React, { useState } from 'react';
-import picture from '../assets/images/favicon.svg'
+import picture from '../assets/images/logo.png'
 
 //Calendar
 // import { LocalizationProvider } from '@mui/x-date-pickers';
@@ -115,9 +115,7 @@ export default function Account() {
             alt="Default user icon"
             style={{
 
-                height: '150px',
-                width: '150px',
-                marginLeft: '25px'
+             
 
             }}
             />

@@ -187,6 +187,7 @@ function Employee() {
             size="sm"
             onClick={toggleShow}
         >
+           <MDBIcon fas icon="user-plus" className="me-2" /> 
             Create Account
         </MDBBtn>
 

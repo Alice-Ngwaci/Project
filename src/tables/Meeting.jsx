@@ -254,27 +254,46 @@ function Meet() {
       <div className='d-flex flex-row mt-1 mb-3' style={{fontSize: 10}}>
                 <MDBIcon fas icon="cubes fa-3x me-3" style={{ color: '#ff6219' }}/>
                 <span className="p fw-bold mt-2">MHASIBU SACCO</span>
+
+                <a href="https://calendar.google.com/"
+                style={{
+                  
+                  float: 'right',
+                  marginLeft: '30%'
+                  
+                  }}>
+                <MDBBtn
+              
+                  rounded
+                  size="sm"
+                 
+              >
+                <MDBIcon far icon="calendar" className="me-2" /> 
+                Event Calendar
+              </MDBBtn>
+              </a>
               </div>
         
-        <MDBBtn
-            style={{
-            backgroundColor: 'InfoBackground',
-            float: 'right',
-            marginTop: '-50px'
-            }}
-            rounded
-            size="sm"
-            onClick={toggleShow}
-        >
-            Setup Meeting
-        </MDBBtn>
+              <MDBBtn
+                style={{
+                backgroundColor: 'InfoBackground',
+                float: 'right',
+                marginTop: '-53px'
+                }}
+                rounded
+                size="sm"
+                onClick={toggleShow}
+              >
+                <MDBIcon fas icon="handshake" className="me-2" /> 
+                Setup Meeting
+             </MDBBtn>
 
         <MDBTable className='mt-2' align="middle" style={{marginLeft: '50', marginRight: '50'}} >
         <MDBTableHead>
         <tr>
 
             <th scope="col">Email</th>
-            <th scope="col">Meeting_Title</th>
+            <th scope="col">Agenda</th>
             <th scope="col">Location</th>
             <th scope="col">Date</th>
             <th scope="col">Time</th>

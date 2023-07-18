@@ -280,6 +280,7 @@ export default function Tasks() {
             size="sm"
             onClick={toggleShow}
           >
+            <MDBIcon fas icon="folder"  className="me-2" ></MDBIcon>
             Create Folder
           </MDBBtn>
 

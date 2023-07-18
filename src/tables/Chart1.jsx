@@ -269,6 +269,8 @@ class App extends Component {
                 rounded
                 size="sm"
               >
+
+              <MDBIcon fas icon="folder"  className="me-2" ></MDBIcon>
                 Share Files
               </MDBBtn>
               </a>
